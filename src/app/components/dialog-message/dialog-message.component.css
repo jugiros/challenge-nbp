@@ -1,0 +1,15 @@
+.dialog {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 20px;
+  width: 300px;
+  text-align: center;
+}
+
+.buttons {
+  margin-top: 10px;
+}
+
+.buttons button {
+  margin: 0 5px;
+}
