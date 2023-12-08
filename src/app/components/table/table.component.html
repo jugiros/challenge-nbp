@@ -1,1 +1,12 @@
-<p>table works!</p>
+<table *ngIf="tableData">
+  <thead>
+  <tr>
+    <th *ngFor="let header of tableData.headers">{{ header }}</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let row of tableData.rows">
+    <td *ngFor="let cell of row">{{ cell }}</td>
+  </tr>
+  </tbody>
+</table>
