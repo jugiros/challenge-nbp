@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { TableComponent } from './components/table/table.component'; // Ruta correcta al componente de tabla
+import { TableComponent } from './components/table/table.component';
 
 @NgModule({
   declarations: [
