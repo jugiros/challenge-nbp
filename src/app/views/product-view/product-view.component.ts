@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TableData } from '../../components/table/table.component';
 import {ProductoFinanciero} from "../../models/producto-financiero.model";
 import {ProductService} from "../../services/product.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-product-view',
@@ -12,7 +13,7 @@ export class ProductViewComponent implements OnInit {
   tableData: TableData | undefined;
   productos: ProductoFinanciero[] = [];
 
-  constructor(private productService: ProductService) {}
+  constructor(private productService: ProductService, private router: Router) {}
 
   ngOnInit(): void {
     this.productService.getAll()
@@ -38,5 +39,9 @@ export class ProductViewComponent implements OnInit {
     });
 
     return { headers, rows };
+  }
+
+  navigateToProductCreate() {
+    this.router.navigate(['/product-create']);
   }
 }

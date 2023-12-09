@@ -1,36 +1,41 @@
-import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from "@angular/core";
-import {AppComponent} from "./app.component";
-import {AppBarComponent} from "./components/app-bar/app-bar.component";
-import {ProductViewComponent} from "./views/product-view/product-view.component";
-import {TableComponent} from "./components/table/table.component";
-import {CommonModule} from "@angular/common";
-import {HttpClientModule} from '@angular/common/http';
-import {ProductService} from "./services/product.service";
-import {ProductCreateComponent} from "./views/product-create/product-create.component";
-import {FormsModule} from "@angular/forms";
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { routes } from './app.routes';
+
+import { AppComponent } from './app.component';
+import { AppBarComponent } from './components/app-bar/app-bar.component';
+import { ProductViewComponent } from './views/product-view/product-view.component';
+import { ProductCreateComponent } from './views/product-create/product-create.component';
+import { TableComponent } from './components/table/table.component';
+import { CommonModule } from '@angular/common';
+import { ProductService } from './services/product.service';
 
 @NgModule({
   declarations: [
+    AppComponent,
     AppBarComponent,
     ProductViewComponent,
     ProductCreateComponent,
     TableComponent
   ],
-  bootstrap: [AppComponent],
   imports: [
+    BrowserModule,
     CommonModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    RouterModule.forRoot(routes)
   ],
   exports: [
     AppBarComponent,
     ProductViewComponent,
     ProductCreateComponent
   ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
     ProductService
-  ]
+  ],
+  bootstrap: [AppComponent]
 })
-export class AppModule {
-}
+export class AppModule { }
