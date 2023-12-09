@@ -6,21 +6,26 @@ import {TableComponent} from "./components/table/table.component";
 import {CommonModule} from "@angular/common";
 import {HttpClientModule} from '@angular/common/http';
 import {ProductService} from "./services/product.service";
+import {ProductCreateComponent} from "./views/product-create/product-create.component";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
     AppBarComponent,
     ProductViewComponent,
+    ProductCreateComponent,
     TableComponent
   ],
   bootstrap: [AppComponent],
   imports: [
     CommonModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   exports: [
     AppBarComponent,
-    ProductViewComponent
+    ProductViewComponent,
+    ProductCreateComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [

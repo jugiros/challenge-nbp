@@ -6,13 +6,30 @@
   padding: 100px;
 }
 
+.custom-button {
+  background-color: #f9de4b;
+  width: 100px;
+  position: absolute;
+  top: 150px;
+  height: 40px;
+  right: 100px;
+}
+
+app-table {
+  flex: 1;
+}
+
 @media only screen and (max-width: 600px) {
   .container {
     padding: 10px;
     height: calc(100vh - 20px);
   }
-}
-
-app-table {
-  flex: 1;
+  .custom-button {
+    background-color: #f9de4b;
+    width: 100px;
+    position: absolute;
+    top: 70px;
+    height: 40px;
+    right: 10px;
+  }
 }
