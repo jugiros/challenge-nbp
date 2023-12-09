@@ -1,19 +1,24 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { TableComponent } from './components/table/table.component';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from "@angular/core";
+import {AppComponent} from "./app.component";
 import {AppBarComponent} from "./components/app-bar/app-bar.component";
-import {DialogMessageComponent} from "./components/dialog-message/dialog-message.component";
+import {ProductViewComponent} from "./views/product-view/product-view.component";
+import {TableComponent} from "./components/table/table.component";
+import {CommonModule} from "@angular/common";
 
 @NgModule({
   declarations: [
-    TableComponent,
     AppBarComponent,
-    DialogMessageComponent
+    ProductViewComponent,
+    TableComponent
   ],
+  bootstrap: [AppComponent],
   imports: [
-    BrowserModule
+    CommonModule
   ],
-  providers: [],
-  bootstrap: []
+  exports: [
+    AppBarComponent,
+    ProductViewComponent
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class MainModule { }
+export class AppModule { }

@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-interface TableData {
+export interface TableData {
   headers: string[];
   rows: any[][];
 }
