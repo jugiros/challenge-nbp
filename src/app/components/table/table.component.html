@@ -1,3 +1,4 @@
+<input type="text" placeholder="Buscar" (input)="onSearch($event)">
 <table *ngIf="tableData">
   <thead>
   <tr>
@@ -10,3 +11,9 @@
   </tr>
   </tbody>
 </table>
+<label for="pageSizeSelect">Mostrar:</label>
+<select id="pageSizeSelect" (change)="onChangePageSize($event)">
+  <option value="5">5</option>
+  <option value="10">10</option>
+  <option value="20">20</option>
+</select>
