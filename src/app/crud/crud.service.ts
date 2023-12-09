@@ -1,11 +1,17 @@
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
+import {AppConfig} from "../config/config";
 
 export class CrudService<T> {
-  constructor(private http: HttpClient, private apiUrl: string) {}
+  constructor(protected http: HttpClient, protected apiUrl: string) {}
+
+  private generateHeaders(): HttpHeaders {
+    return new HttpHeaders().set('authorId', AppConfig.authorId);
+  }
 
   getAll(): Observable<T[]> {
-    return this.http.get<T[]>(this.apiUrl);
+    const headers = this.generateHeaders();
+    return this.http.get<T[]>(this.apiUrl, { headers });
   }
 
   getById(id: number): Observable<T> {
