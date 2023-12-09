@@ -23,15 +23,14 @@ export class ProductViewComponent implements OnInit {
   }
 
   generateTableData(productos: ProductoFinanciero[]): TableData {
-    const headers = ['ID', 'Nombre', 'Descripción', 'Logo', 'Fecha de Lanzamiento', 'Fecha de Revisión'];
+    const headers = ['Logo', 'Nombre', 'Descripción', 'Fecha de Lanzamiento', 'Fecha de Revisión'];
     const rows: any[] = [];
 
     productos.forEach((producto: ProductoFinanciero) => {
       const row = [
-        producto.id,
+        producto.logo,
         producto.name,
         producto.description,
-        producto.logo,
         producto.date_release,
         producto.date_revision
       ];

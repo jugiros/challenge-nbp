@@ -6,6 +6,13 @@
   padding: 100px;
 }
 
+@media only screen and (max-width: 600px) {
+  .container {
+    padding: 10px;
+    height: calc(100vh - 20px);
+  }
+}
+
 app-table {
   flex: 1;
 }

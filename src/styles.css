@@ -1,3 +1,14 @@
 body {
   margin: 0px;
+  font-family: Arial, sans-serif;
+}
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea {
+  border-radius: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  border-width: 1px;
+  height: 25px;
 }

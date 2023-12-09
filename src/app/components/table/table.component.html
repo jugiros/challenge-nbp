@@ -1,19 +1,30 @@
 <input type="text" placeholder="Buscar" (input)="onSearch($event)">
-<table *ngIf="tableData">
-  <thead>
-  <tr>
-    <th *ngFor="let header of tableData.headers">{{ header }}</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let row of tableData.rows">
-    <td *ngFor="let cell of row">{{ cell }}</td>
-  </tr>
-  </tbody>
-</table>
-<label for="pageSizeSelect">Mostrar:</label>
-<select id="pageSizeSelect" (change)="onChangePageSize($event)">
-  <option value="5">5</option>
-  <option value="10">10</option>
-  <option value="20">20</option>
-</select>
+<div class="table-responsive">
+  <div class="table-wrapper">
+    <table *ngIf="tableData">
+      <thead>
+      <tr>
+        <th *ngFor="let header of tableData.headers">{{ header }}</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let row of tableData.rows; let i = index">
+        <td *ngFor="let cell of row; let j = index">
+          <ng-container *ngIf="j === 0; else notLogo">
+            <img class="avatar" [src]="cell" alt="Logo" width="50" height="50">
+          </ng-container>
+          <ng-template #notLogo>{{ cell }}</ng-template>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="bottom-right">
+  <label for="pageSizeSelect">Mostrar:</label>
+  <select id="pageSizeSelect" (change)="onChangePageSize($event)">
+    <option value="5">5</option>
+    <option value="10">10</option>
+    <option value="20">20</option>
+  </select>
+</div>
