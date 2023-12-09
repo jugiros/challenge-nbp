@@ -1,0 +1,54 @@
+<form (ngSubmit)="onSubmit()" #productForm="ngForm">
+  <div>
+    <label for="id">ID:</label>
+    <input type="text" id="id" name="id" required [(ngModel)]="producto.id">
+    <div *ngIf="productForm.controls['id'].invalid && productForm.controls['id'].touched">
+      El campo ID es obligatorio.
+    </div>
+  </div>
+
+  <div>
+    <label for="name">Nombre:</label>
+    <input type="text" id="name" name="name" required [(ngModel)]="producto.name">
+    <div *ngIf="productForm.controls['name'].invalid && productForm.controls['name'].touched">
+      El campo Nombre es obligatorio.
+    </div>
+  </div>
+
+  <div>
+    <label for="description">Descripción:</label>
+    <textarea id="description" name="description" required [(ngModel)]="producto.description"></textarea>
+    <div *ngIf="productForm.controls['description'].invalid && productForm.controls['description'].touched">
+      La descripción es obligatoria.
+    </div>
+  </div>
+
+  <div>
+    <label for="logo">Logo:</label>
+    <input type="text" id="logo" name="logo" required [(ngModel)]="producto.logo">
+    <div *ngIf="productForm.controls['logo'].invalid && productForm.controls['logo'].touched">
+      El campo Logo es obligatorio.
+    </div>
+  </div>
+
+  <div>
+    <label for="date_release">Fecha de lanzamiento:</label>
+    <input type="date" id="date_release" name="date_release" required [(ngModel)]="producto.date_release">
+    <div *ngIf="productForm.controls['date_release'].invalid && productForm.controls['date_release'].touched">
+      La fecha de lanzamiento es obligatoria.
+    </div>
+  </div>
+
+  <div>
+    <label for="date_revision">Fecha de revisión:</label>
+    <input type="date" id="date_revision" name="date_revision" required [(ngModel)]="producto.date_revision">
+    <div *ngIf="productForm.controls['date_revision'].invalid && productForm.controls['date_revision'].touched">
+      La fecha de revisión es obligatoria.
+    </div>
+  </div>
+
+  <div class="buttons">
+    <button type="submit" [disabled]="productForm.invalid">Agregar</button>
+    <button type="button" (click)="resetForm()">Reiniciar</button>
+  </div>
+</form>
