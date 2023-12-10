@@ -42,6 +42,7 @@ export class ProductViewComponent implements OnInit {
   }
 
   navigateToProductCreate() {
+    console.log("Ingresa");
     this.router.navigate(['/product-create']);
   }
 }
