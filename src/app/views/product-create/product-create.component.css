@@ -1,9 +1,9 @@
-.container {
+.container-product-create {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+  flex-direction: column;
+  height: calc(100vh - 100px);
   background-color: #f4f6f9;
+  padding-top: 30px;
 }
 
 .container-form {
@@ -49,7 +49,7 @@ textarea {
 }
 
 @media only screen and (max-width: 600px) {
-  .container {
+  .container-product-create {
     padding: 10px;
     height: calc(100vh - 20px);
   }
