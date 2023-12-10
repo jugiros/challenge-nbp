@@ -3,6 +3,7 @@ import { ProductoFinanciero } from '../../models/producto-financiero.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProductService } from '../../services/product.service';
 import {Router} from "@angular/router";
+import {DialogService} from "../../services/dialog.service";
 
 @Component({
   selector: 'app-product-create',
@@ -13,7 +14,10 @@ export class ProductCreateComponent {
   producto: ProductoFinanciero = new ProductoFinanciero('', '', '', '', new Date(), new Date());
   productForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private productService: ProductService, private router: Router) {
+  constructor(private formBuilder: FormBuilder,
+              private productService: ProductService,
+              private router: Router,
+              private dialogService: DialogService) {
     this.productForm = this.formBuilder.group({
       id: [this.producto.id, Validators.required],
       name: [this.producto.name, Validators.required],
@@ -33,9 +37,12 @@ export class ProductCreateComponent {
           console.log('Producto creado:', response);
           this.resetForm();
 
-          this.router.navigate(['/']);
+          this.dialogService.showDialog('Proceso realizado de manera correcta').subscribe(() => {
+            this.router.navigate(['/']);
+          });
         },
         (error) => {
+          this.dialogService.showDialog('Error al momento de guardar el producto');
           console.error('Error al crear el producto:', error);
         }
       );

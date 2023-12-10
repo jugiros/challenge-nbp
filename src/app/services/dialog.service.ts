@@ -11,8 +11,19 @@ export class DialogService {
 
   constructor() {}
 
-  public showDialog(message: string) {
+  public showDialog(message: string): Observable<void> {
     this.showDialogSubject.next(message);
+
+    return new Observable<void>((observer) => {
+      const subscription = this.showDialog$.subscribe((msg) => {
+        if (!msg) {
+          observer.next();
+          observer.complete();
+        }
+      });
+
+      return () => subscription.unsubscribe();
+    });
   }
 
   public closeDialog() {
