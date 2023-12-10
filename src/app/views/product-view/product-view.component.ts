@@ -4,6 +4,7 @@ import { ProductoFinanciero } from '../../models/producto-financiero.model';
 import { ProductService } from '../../services/product.service';
 import { Router } from '@angular/router';
 import { DialogService } from '../../services/dialog.service';
+import {ProductDataService} from "../../services/product.data.service";
 
 @Component({
   selector: 'app-product-view',
@@ -17,7 +18,8 @@ export class ProductViewComponent implements OnInit {
   constructor(
     private productService: ProductService,
     private router: Router,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private productDataService: ProductDataService
   ) {}
 
   ngOnInit(): void {
@@ -70,6 +72,19 @@ export class ProductViewComponent implements OnInit {
     this.dialogService.showDialog(`¿Está seguro de eliminar el producto ${productoFinanciero.name}?`).subscribe(() => {
       this.deleteProduct(productoFinanciero);
     });
+  }
+
+  onUpdateItem(productoArray: string[]): void {
+    const productoFinanciero: ProductoFinanciero = new ProductoFinanciero(
+      productoArray[0],
+      productoArray[2],
+      productoArray[3],
+      productoArray[1],
+      new Date(productoArray[4]),
+      new Date(productoArray[5])
+    );
+    this.productDataService.changeProduct(productoFinanciero);
+    this.router.navigate(['/product-create']);
   }
 
   deleteProduct(producto: ProductoFinanciero): void {

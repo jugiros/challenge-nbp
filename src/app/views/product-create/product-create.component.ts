@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { ProductoFinanciero } from '../../models/producto-financiero.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProductService } from '../../services/product.service';
-import {Router} from "@angular/router";
-import {DialogService} from "../../services/dialog.service";
+import { Router, ActivatedRoute } from '@angular/router';
+import { DialogService } from '../../services/dialog.service';
+import {ProductDataService} from "../../services/product.data.service";
 
 @Component({
   selector: 'app-product-create',
@@ -14,10 +15,14 @@ export class ProductCreateComponent {
   producto: ProductoFinanciero = new ProductoFinanciero('', '', '', '', new Date(), new Date());
   productForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder,
-              private productService: ProductService,
-              private router: Router,
-              private dialogService: DialogService) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private productService: ProductService,
+    private router: Router,
+    private dialogService: DialogService,
+    private route: ActivatedRoute,
+    private productDataService: ProductDataService
+  ) {
     this.productForm = this.formBuilder.group({
       id: [this.producto.id, Validators.required],
       name: [this.producto.name, Validators.required],
@@ -25,6 +30,15 @@ export class ProductCreateComponent {
       logo: [this.producto.logo, Validators.required],
       date_release: [this.producto.date_release, Validators.required],
       date_revision: [this.producto.date_revision, Validators.required]
+    });
+  }
+
+  ngOnInit(): void {
+    this.productDataService.currentProduct.subscribe(producto => {
+      if (producto) {
+        this.producto = producto;
+        this.productForm.patchValue(this.producto);
+      }
     });
   }
 
