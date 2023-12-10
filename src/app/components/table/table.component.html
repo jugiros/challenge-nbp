@@ -15,6 +15,17 @@
           </ng-container>
           <ng-template #notLogo>{{ cell }}</ng-template>
         </td>
+        <td>
+          <div class="dropdown">
+            <button class="dropdown-btn">
+              <i class="fas fa-ellipsis-v"></i>
+            </button>
+            <div class="dropdown-content">
+              <a href="#" (click)="onUpdateItem(row)">Actualizar</a>
+              <a href="#" (click)="onDeleteItem(row)">Eliminar</a>
+            </div>
+          </div>
+        </td>
       </tr>
       </tbody>
     </table>
