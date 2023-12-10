@@ -1,51 +1,58 @@
 <section class="container-product-create">
-  <form (ngSubmit)="onSubmit()" #productForm="ngForm" class="container-form">
+  <form (ngSubmit)="onSubmit()" [formGroup]="productForm" class="container-form">
     <h2>Formulario de Registro</h2>
     <hr>
     <div class="form-row">
       <div class="form-group">
         <label for="id">ID:</label>
-        <input type="text" id="id" name="id" required [(ngModel)]="producto.id">
-        <div *ngIf="productForm.controls['id'].invalid && productForm.controls['id'].touched">
+        <input type="text" id="id" name="id" required formControlName="id"
+               [ngClass]="{ 'invalid': productForm.controls['id'].invalid && productForm.controls['id'].touched }">
+        <div *ngIf="productForm.controls['id'].invalid && productForm.controls['id'].touched" class="error-message">
           El campo ID es obligatorio.
         </div>
       </div>
       <div class="form-group">
         <label for="name">Nombre:</label>
-        <input type="text" id="name" name="name" required [(ngModel)]="producto.name">
-        <div *ngIf="productForm.controls['name'].invalid && productForm.controls['name'].touched">
+        <input type="text" id="name" name="name" required formControlName="name"
+               [ngClass]="{ 'invalid': productForm.controls['name'].invalid && productForm.controls['name'].touched }">
+        <div *ngIf="productForm.controls['name'].invalid && productForm.controls['name'].touched"
+             class="error-message">
           El campo Nombre es obligatorio.
         </div>
       </div>
-    </div>
-    <div class="form-row">
       <div class="form-group">
         <label for="description">Descripción:</label>
-        <textarea id="description" name="description" required [(ngModel)]="producto.description"></textarea>
-        <div *ngIf="productForm.controls['description'].invalid && productForm.controls['description'].touched">
+        <textarea id="description" name="description" required formControlName="description"
+                  [ngClass]="{ 'invalid': productForm.controls['description'].invalid && productForm.controls['description'].touched }"></textarea>
+        <div *ngIf="productForm.controls['description'].invalid && productForm.controls['description'].touched"
+             class="error-message">
           La descripción es obligatoria.
         </div>
       </div>
       <div class="form-group">
         <label for="logo">Logo:</label>
-        <input type="text" id="logo" name="logo" required [(ngModel)]="producto.logo">
-        <div *ngIf="productForm.controls['logo'].invalid && productForm.controls['logo'].touched">
+        <input type="text" id="logo" name="logo" required formControlName="logo"
+               [ngClass]="{ 'invalid': productForm.controls['logo'].invalid && productForm.controls['logo'].touched }">
+        <div *ngIf="productForm.controls['logo'].invalid && productForm.controls['logo'].touched"
+             class="error-message">
           El campo Logo es obligatorio.
         </div>
       </div>
-    </div>
-    <div class="form-row">
       <div class="form-group">
         <label for="date_release">Fecha de lanzamiento:</label>
-        <input type="date" id="date_release" name="date_release" required [(ngModel)]="producto.date_release">
-        <div *ngIf="productForm.controls['date_release'].invalid && productForm.controls['date_release'].touched">
+        <input type="date" id="date_release" name="date_release" required formControlName="date_release"
+               [ngClass]="{ 'invalid': productForm.controls['date_release'].invalid && productForm.controls['date_release'].touched }">
+        <div *ngIf="productForm.controls['date_release'].invalid && productForm.controls['date_release'].touched"
+             class="error-message">
           La fecha de lanzamiento es obligatoria.
         </div>
       </div>
       <div class="form-group">
         <label for="date_revision">Fecha de revisión:</label>
-        <input type="date" id="date_revision" name="date_revision" required [(ngModel)]="producto.date_revision">
-        <div *ngIf="productForm.controls['date_revision'].invalid && productForm.controls['date_revision'].touched">
+        <input type="date" id="date_revision" name="date_revision" required formControlName="date_revision"
+               [ngClass]="{ 'invalid': productForm.controls['date_revision'].invalid && productForm.controls['date_revision'].touched }">
+        <div *ngIf="productForm.controls['date_revision'].invalid && productForm.controls['date_revision'].touched"
+             class="error-message">
           La fecha de revisión es obligatoria.
         </div>
       </div>
@@ -54,7 +61,7 @@
       <div class="form-group">
         <div class="buttons">
           <button class="secondary-button" type="button" (click)="resetForm()">Reiniciar</button>
-          <button class="primary-button" type="submit" [disabled]="productForm.invalid">Enviar</button>
+          <button class="primary-button" type="submit">Enviar</button>
         </div>
       </div>
     </div>

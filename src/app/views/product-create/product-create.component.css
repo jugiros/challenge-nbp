@@ -8,7 +8,7 @@
 
 .container-form {
   width: 60%;
-  max-width: 960px;
+  max-width: 700px;
   background-color: white;
   padding: 20px;
   margin: 0 auto;
@@ -20,7 +20,7 @@ h2 {
 
 .form-row {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 25px;
 }
 
@@ -46,6 +46,17 @@ textarea {
   justify-content: center;
   align-items: center;
   gap: 15px;
+}
+
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.form-group input.invalid,
+.form-group textarea.invalid {
+  border-color: red;
 }
 
 @media only screen and (max-width: 600px) {

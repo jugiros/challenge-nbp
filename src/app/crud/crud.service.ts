@@ -19,7 +19,8 @@ export class CrudService<T> {
   }
 
   create(item: T): Observable<T> {
-    return this.http.post<T>(this.apiUrl, item);
+    const headers = this.generateHeaders();
+    return this.http.post<T>(this.apiUrl, item, { headers });
   }
 
   update(id: number, item: T): Observable<T> {

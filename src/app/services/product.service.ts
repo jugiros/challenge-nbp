@@ -17,4 +17,8 @@ export class ProductService extends CrudService<ProductoFinanciero> {
   override getAll(): Observable<ProductoFinanciero[]> {
     return super.getAll();
   }
+
+  override create(item: ProductoFinanciero): Observable<ProductoFinanciero> {
+    return super.create(item);
+  }
 }

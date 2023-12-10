@@ -1,3 +1,3 @@
 export const AppConfig = {
-  authorId: '3'
+  authorId: '12345'
 };
