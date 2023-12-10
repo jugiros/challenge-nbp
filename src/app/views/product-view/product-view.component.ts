@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { TableData } from '../../components/table/table.component';
-import {ProductoFinanciero} from "../../models/producto-financiero.model";
-import {ProductService} from "../../services/product.service";
-import {Router} from "@angular/router";
+import { ProductoFinanciero } from '../../models/producto-financiero.model';
+import { ProductService } from '../../services/product.service';
+import { Router } from '@angular/router';
+import { DialogService } from '../../services/dialog.service';
 
 @Component({
   selector: 'app-product-view',
@@ -13,36 +14,74 @@ export class ProductViewComponent implements OnInit {
   tableData: TableData | undefined;
   productos: ProductoFinanciero[] = [];
 
-  constructor(private productService: ProductService, private router: Router) {}
+  constructor(
+    private productService: ProductService,
+    private router: Router,
+    private dialogService: DialogService
+  ) {}
 
   ngOnInit(): void {
-    this.productService.getAll()
-      .subscribe((productos: ProductoFinanciero[]) => {
-        this.productos = productos;
-        this.tableData = this.generateTableData(productos);
-      });
+    this.refreshTableData();
+  }
+
+  refreshTableData(): void {
+    this.productService.getAll().subscribe((productos: ProductoFinanciero[]) => {
+      this.productos = productos;
+      this.tableData = this.generateTableData(productos);
+    });
   }
 
   generateTableData(productos: ProductoFinanciero[]): TableData {
-    const headers = ['Logo', 'Nombre', 'Descripción', 'Fecha de Lanzamiento', 'Fecha de Revisión', 'Acciones'];
-    const rows: any[] = [];
-
-    productos.forEach((producto: ProductoFinanciero) => {
-      const row = [
-        producto.logo,
-        producto.name,
-        producto.description,
-        producto.date_release,
-        producto.date_revision
-      ];
-      rows.push(row);
-    });
+    const headers = [
+      'id',
+      'Logo',
+      'Nombre',
+      'Descripción',
+      'Fecha de Lanzamiento',
+      'Fecha de Revisión',
+      'Acciones'
+    ];
+    const rows: any[] = productos.map((producto: ProductoFinanciero) => [
+      producto.id,
+      producto.logo,
+      producto.name,
+      producto.description,
+      producto.date_release,
+      producto.date_revision
+    ]);
 
     return { headers, rows };
   }
 
-  navigateToProductCreate() {
-    console.log("Ingresa");
+  navigateToProductCreate(): void {
     this.router.navigate(['/product-create']);
+  }
+
+  onDeleteItem(productoArray: string[]): void {
+    const productoFinanciero: ProductoFinanciero = new ProductoFinanciero(
+      productoArray[0],
+      productoArray[2],
+      productoArray[3],
+      productoArray[1],
+      new Date(productoArray[4]),
+      new Date(productoArray[5])
+    );
+
+    this.dialogService.showDialog(`¿Está seguro de eliminar el producto ${productoFinanciero.name}?`).subscribe(() => {
+      this.deleteProduct(productoFinanciero);
+    });
+  }
+
+  deleteProduct(producto: ProductoFinanciero): void {
+    this.productService.delete(producto.id).subscribe(
+      () => {
+        this.refreshTableData();
+        this.dialogService.showDialog('Producto eliminado correctamente');
+      },
+      (error) => {
+        console.error('Error al eliminar el producto:', error);
+        this.refreshTableData();
+      }
+    );
   }
 }

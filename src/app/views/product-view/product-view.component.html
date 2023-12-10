@@ -1,4 +1,4 @@
 <section class="container-product-view">
   <button class="custom-button" (click)="navigateToProductCreate()">Agregar</button>
-  <app-table [tableData]="tableData"></app-table>
+  <app-table [tableData]="tableData" (deleteItem)="onDeleteItem($event)"></app-table>
 </section>

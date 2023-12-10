@@ -4,25 +4,35 @@
     <table *ngIf="tableData">
       <thead>
       <tr>
-        <th *ngFor="let header of tableData.headers">{{ header }}</th>
+        <ng-container *ngFor="let header of tableData.headers">
+          <ng-container *ngIf="header !== 'id'">
+            <th>{{ header }}</th>
+          </ng-container>
+        </ng-container>
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let row of tableData.rows; let i = index">
-        <td *ngFor="let cell of row; let j = index">
-          <ng-container *ngIf="j === 0; else notLogo">
-            <img class="avatar" [src]="cell" alt="Logo" width="50" height="50">
+      <tr *ngFor="let row of tableData.rows">
+        <ng-container *ngFor="let cell of row; let i = index">
+          <ng-container *ngIf="i !== 0">
+            <td>
+              <ng-container *ngIf="i === 1 && cell !== 'logo'; else notLogo">
+                <img class="avatar" [src]="cell" alt="Logo" width="50" height="50">
+              </ng-container>
+              <ng-template #notLogo>
+                {{ cell }}
+              </ng-template>
+            </td>
           </ng-container>
-          <ng-template #notLogo>{{ cell }}</ng-template>
-        </td>
+        </ng-container>
         <td>
           <div class="dropdown">
             <button class="dropdown-btn">
               <i class="fas fa-ellipsis-v"></i>
             </button>
             <div class="dropdown-content">
-              <a href="#" (click)="onUpdateItem(row)">Actualizar</a>
-              <a href="#" (click)="onDeleteItem(row)">Eliminar</a>
+              <p (click)="onUpdateItem(row)">Actualizar</p>
+              <p (click)="onDeleteItem(row)">Eliminar</p>
             </div>
           </div>
         </td>

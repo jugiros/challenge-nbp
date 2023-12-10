@@ -4,7 +4,6 @@ import { ProductoFinanciero } from "../models/producto-financiero.model";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "../environments/environment";
 import { API_PATHS } from "../config/api.config";
-import { Observable } from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -12,13 +11,5 @@ import { Observable } from "rxjs";
 export class ProductService extends CrudService<ProductoFinanciero> {
   constructor(http: HttpClient) {
     super(http, `${environment.apiUrl}${API_PATHS.products}`);
-  }
-
-  override getAll(): Observable<ProductoFinanciero[]> {
-    return super.getAll();
-  }
-
-  override create(item: ProductoFinanciero): Observable<ProductoFinanciero> {
-    return super.create(item);
   }
 }

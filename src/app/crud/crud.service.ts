@@ -27,7 +27,14 @@ export class CrudService<T> {
     return this.http.put<T>(`${this.apiUrl}/${id}`, item);
   }
 
-  delete(id: number): Observable<T> {
-    return this.http.delete<T>(`${this.apiUrl}/${id}`);
+  delete(id: string): Observable<T> {
+    const headers = this.generateHeaders();
+
+    const httpOptions = {
+      headers: headers,
+      params: { id },
+    };
+
+    return this.http.delete<T>(`${this.apiUrl}`, httpOptions);
   }
 }
