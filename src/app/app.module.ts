@@ -12,6 +12,8 @@ import { ProductCreateComponent } from './views/product-create/product-create.co
 import { TableComponent } from './components/table/table.component';
 import { CommonModule } from '@angular/common';
 import { ProductService } from './services/product.service';
+import {DialogMessageComponent} from "./components/dialog-message/dialog-message.component";
+import {DialogService} from "./services/dialog.service";
 
 @NgModule({
   declarations: [
@@ -19,7 +21,8 @@ import { ProductService } from './services/product.service';
     AppBarComponent,
     ProductViewComponent,
     ProductCreateComponent,
-    TableComponent
+    TableComponent,
+    DialogMessageComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +38,8 @@ import { ProductService } from './services/product.service';
     ProductCreateComponent
   ],
   providers: [
-    ProductService
+    ProductService,
+    DialogService
   ],
   bootstrap: [AppComponent]
 })
