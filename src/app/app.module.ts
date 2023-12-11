@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { routes } from './app.routes';
@@ -39,7 +39,8 @@ import {DialogService} from "./services/dialog.service";
   ],
   providers: [
     ProductService,
-    DialogService
+    DialogService,
+    HttpClient
   ],
   bootstrap: [AppComponent]
 })

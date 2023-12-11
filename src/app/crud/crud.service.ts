@@ -14,8 +14,15 @@ export class CrudService<T> {
     return this.http.get<T[]>(this.apiUrl, { headers });
   }
 
-  getById(id: number): Observable<T> {
-    return this.http.get<T>(`${this.apiUrl}/${id}`);
+  getById(id: string): Observable<any> {
+    const headers = this.generateHeaders();
+
+    const httpOptions = {
+      headers: headers,
+      params: { id },
+    };
+
+    return this.http.get<any>(`${this.apiUrl}/verification`, httpOptions);
   }
 
   create(item: T): Observable<T> {
