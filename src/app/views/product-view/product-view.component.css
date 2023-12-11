@@ -1,7 +1,7 @@
 .container-product-view {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 200px);
+  height: calc(100vh - 270px);
   background-color: #f4f6f9;
   padding: 100px;
 }

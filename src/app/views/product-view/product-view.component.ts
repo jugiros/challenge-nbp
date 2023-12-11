@@ -4,7 +4,7 @@ import { ProductoFinanciero } from '../../models/producto-financiero.model';
 import { ProductService } from '../../services/product.service';
 import { Router } from '@angular/router';
 import { DialogService } from '../../services/dialog.service';
-import {ProductDataService} from "../../services/product.data.service";
+import { ProductDataService } from "../../services/product.data.service";
 
 @Component({
   selector: 'app-product-view',
@@ -23,10 +23,10 @@ export class ProductViewComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.refreshTableData();
+    this.fetchProducts();
   }
 
-  refreshTableData(): void {
+  fetchProducts(): void {
     this.productService.getAll().subscribe((productos: ProductoFinanciero[]) => {
       this.productos = productos;
       this.tableData = this.generateTableData(productos);
@@ -56,47 +56,47 @@ export class ProductViewComponent implements OnInit {
   }
 
   navigateToProductCreate(): void {
+    const newEmptyProduct: ProductoFinanciero = new ProductoFinanciero('', '', '', '', new Date(), new Date());
+    this.productDataService.changeProduct(newEmptyProduct, false);
     this.router.navigate(['/product-create']);
   }
 
-  onDeleteItem(productoArray: string[]): void {
-    const productoFinanciero: ProductoFinanciero = new ProductoFinanciero(
-      productoArray[0],
-      productoArray[2],
-      productoArray[3],
-      productoArray[1],
-      new Date(productoArray[4]),
-      new Date(productoArray[5])
-    );
-
-    this.dialogService.showDialog(`¿Está seguro de eliminar el producto ${productoFinanciero.name}?`).subscribe(() => {
-      this.deleteProduct(productoFinanciero);
+  confirmProductDeletion(productoArray: string[]): void {
+    this.dialogService.showDialog(`¿Está seguro de eliminar el producto ${productoArray[2]}?`).subscribe(() => {
+      this.deleteProduct(productoArray);
     });
   }
 
-  onUpdateItem(productoArray: string[]): void {
-    const productoFinanciero: ProductoFinanciero = new ProductoFinanciero(
-      productoArray[0],
-      productoArray[2],
-      productoArray[3],
-      productoArray[1],
-      new Date(productoArray[4]),
-      new Date(productoArray[5])
-    );
-    this.productDataService.changeProduct(productoFinanciero);
+  updateProduct(productoArray: string[]): void {
+    const productoFinanciero: ProductoFinanciero = this.createProduct(productoArray);
+    this.productDataService.changeProduct(productoFinanciero, true);
     this.router.navigate(['/product-create']);
   }
 
-  deleteProduct(producto: ProductoFinanciero): void {
-    this.productService.delete(producto.id).subscribe(
+  deleteProduct(productoArray: string[]): void {
+    const productoFinanciero: ProductoFinanciero = this.createProduct(productoArray);
+    this.productService.delete(productoFinanciero.id).subscribe(
       () => {
-        this.refreshTableData();
+        this.fetchProducts();
         this.dialogService.showDialog('Producto eliminado correctamente');
       },
       (error) => {
         console.error('Error al eliminar el producto:', error);
-        this.refreshTableData();
+        this.fetchProducts();
       }
     );
+  }
+
+  createProduct(productoArray: string[]): ProductoFinanciero {
+    const productoFinanciero: ProductoFinanciero = new ProductoFinanciero(
+      productoArray[0],
+      productoArray[2],
+      productoArray[3],
+      productoArray[1],
+      new Date(productoArray[4]),
+      new Date(productoArray[5])
+    );
+
+    return productoFinanciero;
   }
 }

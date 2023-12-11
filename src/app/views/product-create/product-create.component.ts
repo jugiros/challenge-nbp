@@ -1,18 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ProductoFinanciero } from '../../models/producto-financiero.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProductService } from '../../services/product.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { DialogService } from '../../services/dialog.service';
-import {ProductDataService} from "../../services/product.data.service";
+import { ProductDataService } from '../../services/product.data.service';
 
 @Component({
   selector: 'app-product-create',
   templateUrl: './product-create.component.html',
   styleUrls: ['./product-create.component.css']
 })
-export class ProductCreateComponent {
+export class ProductCreateComponent implements OnInit {
   producto: ProductoFinanciero = new ProductoFinanciero('', '', '', '', new Date(), new Date());
+  isEditing: boolean = false;
   productForm: FormGroup;
 
   constructor(
@@ -20,35 +21,37 @@ export class ProductCreateComponent {
     private productService: ProductService,
     private router: Router,
     private dialogService: DialogService,
-    private route: ActivatedRoute,
     private productDataService: ProductDataService
   ) {
     this.productForm = this.formBuilder.group({
-      id: [this.producto.id, Validators.required],
-      name: [this.producto.name, Validators.required],
-      description: [this.producto.description, Validators.required],
-      logo: [this.producto.logo, Validators.required],
-      date_release: [this.producto.date_release, Validators.required],
-      date_revision: [this.producto.date_revision, Validators.required]
+      id: ['', Validators.required],
+      name: ['', Validators.required],
+      description: ['', Validators.required],
+      logo: ['', Validators.required],
+      date_release: ['', Validators.required],
+      date_revision: ['', Validators.required]
     });
   }
 
   ngOnInit(): void {
-    this.productDataService.currentProduct.subscribe(producto => {
+    this.productDataService.currentProduct.subscribe(({ producto, isEditing }) => {
       if (producto) {
         this.producto = producto;
         this.productForm.patchValue(this.producto);
       }
+      this.isEditing = isEditing;
     });
   }
 
-  onSubmit() {
+  onSubmit(): void {
     if (this.productForm.valid) {
-      this.producto = this.productForm.value;
+      const productToUpdate = this.productForm.value as ProductoFinanciero;
 
-      this.productService.create(this.producto).subscribe(
+      const productServiceMethod = this.isEditing ? 'update' : 'create';
+
+      this.productService[productServiceMethod](productToUpdate).subscribe(
         (response: ProductoFinanciero) => {
-          console.log('Producto creado:', response);
+          console.log(`Producto ${this.isEditing ? 'editado' : 'creado'}:`, response);
           this.resetForm();
 
           this.dialogService.showDialog('Proceso realizado de manera correcta').subscribe(() => {
@@ -56,8 +59,9 @@ export class ProductCreateComponent {
           });
         },
         (error) => {
-          this.dialogService.showDialog('Error al momento de guardar el producto');
-          console.error('Error al crear el producto:', error);
+          const errorMessage = this.isEditing ? 'editar' : 'guardar';
+          this.dialogService.showDialog(`Error al momento de ${errorMessage} el producto`);
+          console.error(`Error al ${errorMessage} el producto:`, error);
         }
       );
     } else {
@@ -65,12 +69,12 @@ export class ProductCreateComponent {
     }
   }
 
-  resetForm() {
+  resetForm(): void {
     this.producto = new ProductoFinanciero('', '', '', '', new Date(), new Date());
     this.productForm.reset();
   }
 
-  validateAllFormFields(formGroup: FormGroup) {
+  validateAllFormFields(formGroup: FormGroup): void {
     Object.keys(formGroup.controls).forEach((field) => {
       const control = formGroup.get(field);
       if (control instanceof FormGroup) {
