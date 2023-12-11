@@ -12,7 +12,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let row of tableData.rows">
+      <tr *ngFor="let row of displayedRows">
         <ng-container *ngFor="let cell of row; let i = index">
           <ng-container *ngIf="i !== 0">
             <td>
@@ -44,8 +44,8 @@
 <div class="bottom-right">
   <label for="pageSizeSelect">Mostrar:</label>
   <select id="pageSizeSelect" (change)="onChangePageSize($event)">
-    <option value="5">5</option>
-    <option value="10">10</option>
-    <option value="20">20</option>
+    <option value="5" [selected]="pageSize === 5">5</option>
+    <option value="10" [selected]="pageSize === 10">10</option>
+    <option value="20" [selected]="pageSize === 20">20</option>
   </select>
 </div>

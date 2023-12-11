@@ -17,7 +17,7 @@ export class DialogService {
     return new Observable<boolean>((observer) => {
       const subscription = this.showDialog$.subscribe((msg) => {
         if (!msg) {
-          observer.next(false); // No confirmed
+          observer.next(false);
           observer.complete();
         }
       });
