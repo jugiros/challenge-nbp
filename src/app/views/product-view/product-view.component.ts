@@ -62,8 +62,10 @@ export class ProductViewComponent implements OnInit {
   }
 
   confirmProductDeletion(productoArray: string[]): void {
-    this.dialogService.showDialog(`¿Está seguro de eliminar el producto ${productoArray[2]}?`).subscribe(() => {
-      this.deleteProduct(productoArray);
+    this.dialogService.showDialog(`¿Está seguro de eliminar el producto ${productoArray[2]}?`).subscribe((confirmed) => {
+      if (confirmed) {
+        this.deleteProduct(productoArray);
+      }
     });
   }
 

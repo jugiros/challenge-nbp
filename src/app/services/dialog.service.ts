@@ -11,13 +11,13 @@ export class DialogService {
 
   constructor() {}
 
-  public showDialog(message: string): Observable<void> {
+  public showDialog(message: string): Observable<boolean> {
     this.showDialogSubject.next(message);
 
-    return new Observable<void>((observer) => {
+    return new Observable<boolean>((observer) => {
       const subscription = this.showDialog$.subscribe((msg) => {
         if (!msg) {
-          observer.next();
+          observer.next(false); // No confirmed
           observer.complete();
         }
       });
